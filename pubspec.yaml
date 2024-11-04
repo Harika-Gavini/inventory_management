@@ -30,8 +30,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  firebase_core: latest_version
-  cloud_firestore: latest_version
+  firebase_core: any
+  cloud_firestore: any
 
 
 
