@@ -23,10 +23,19 @@ class InventoryScreen extends StatelessWidget {
               itemCount: documents.length,
               itemBuilder: (context, index) {
                 // Access document data safely
-                final data = documents[index].data(); 
+                final doc = documents[index]; // Get the document
+                final data = doc.data(); // Retrieve data from the document
+                
                 return ListTile(
-                  title: Text(data['name'] ?? 'Unnamed Item'), // Example field
-                  subtitle: Text('Quantity: ${data['quantity'] ?? 0}'), // Example field
+                  title: Text(data['name'] ?? 'Unnamed Item'), // Display item name
+                  subtitle: Text('Quantity: ${data['quantity'] ?? 0}'), // Display item quantity
+                  trailing: IconButton(
+                    icon: Icon(Icons.delete),
+                    onPressed: () {
+                      // Delete the document from Firestore
+                      FirebaseFirestore.instance.collection('inventory').doc(doc.id).delete();
+                    },
+                  ),
                 );
               },
             );
