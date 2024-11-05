@@ -1,15 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:inventory_management_app/firebase_options.dart';
+import 'package:inventory_management_app/inventory_screen.dart';
 
-class InventoryScreen extends StatelessWidget {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Inventory Management'),
+    return MaterialApp(
+      title: 'Inventory Management App',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
       ),
-      body: Center(
-        child: Text('Welcome to the Inventory Management App!'),
-      ),
+      home: InventoryScreen(),
     );
   }
 }
