@@ -2,14 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UpdateInventoryScreen extends StatelessWidget {
-  final String id;
+  final String documentId;
+  final String currentName;
+  final int currentQuantity;
+
   final TextEditingController nameController;
   final TextEditingController quantityController;
 
-  UpdateInventoryScreen(
-      {required this.id, required String name, required int quantity})
-      : nameController = TextEditingController(text: name),
-        quantityController = TextEditingController(text: quantity.toString());
+  UpdateInventoryScreen({
+    required this.documentId,
+    required this.currentName,
+    required this.currentQuantity,
+  })  : nameController = TextEditingController(text: currentName),
+        quantityController =
+            TextEditingController(text: currentQuantity.toString());
 
   @override
   Widget build(BuildContext context) {
@@ -23,18 +29,31 @@ class UpdateInventoryScreen extends StatelessWidget {
                 controller: nameController,
                 decoration: InputDecoration(labelText: 'Item Name')),
             TextField(
-                controller: quantityController,
-                decoration: InputDecoration(labelText: 'Quantity')),
+              controller: quantityController,
+              decoration: InputDecoration(labelText: 'Quantity'),
+              keyboardType: TextInputType.number,
+            ),
+            SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
-                FirebaseFirestore.instance
-                    .collection('inventory')
-                    .doc(id)
-                    .update({
-                  'name': nameController.text,
-                  'quantity': int.parse(quantityController.text),
-                });
-                Navigator.pop(context);
+              onPressed: () async {
+                final updatedName = nameController.text;
+                final updatedQuantity = int.tryParse(quantityController.text);
+                if (updatedName.isNotEmpty && updatedQuantity != null) {
+                  await FirebaseFirestore.instance
+                      .collection('inventory')
+                      .doc(documentId)
+                      .update({
+                    'name': updatedName,
+                    'quantity': updatedQuantity,
+                  });
+                  Navigator.pop(context); // Return to InventoryScreen
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                        content:
+                            Text('Please enter a valid name and quantity')),
+                  );
+                }
               },
               child: Text('Update Item'),
             ),
