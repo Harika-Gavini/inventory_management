@@ -7,6 +7,25 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:921607986753:android:50ef5d338ab340a02230c0",
+        "android_client_info": {
+          "package_name": "com.example.inventory_management_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdRc-dUBc7KgXm3FWojmyyA8Jb7ZK237Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:921607986753:android:e5cd11cde83a0df72230c0",
         "android_client_info": {
           "package_name": "com.example.inventorymanagement"
